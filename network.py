@@ -1,6 +1,4 @@
 #  -*- coding: utf-8 -*-
-__author__ = 'wangzhonghua'
-__date__ = '2018/8/17 13:42'
 
 import json
 import socket
@@ -12,7 +10,7 @@ SOCKET_RECEIVE_SIZE = 512
 
 
 class Network():
-    '''通信组件，用于各组件间通信：接收、发送UDP数据包'''
+    '''Udp通信组件'''
     def __init__(self):
         try:
             self.Udp_Send_Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -67,9 +65,7 @@ class Network():
                 continue
             else:
                 self.Queue.put(Json_Data)
-                #查看队列是否添加成功
-                # print(f"**********************************:{self.Queue.get_nowait()}")
-
+                
     def udp_listen(self):
         '''监听端口，读取数据报，单独线程，阻塞监听'''
         self.Thread = threading.Thread(target=self.udp_receive_dgram)
@@ -85,4 +81,4 @@ if __name__ == "__main__":
         net.udp_listen()
 
     #测试发送
-    net.udp_send({"a":1,"b":"2", "chinese":"中国"}, ("127.0.0.1", 706))
+    net.udp_send({"a":1,"b":"2"}, ("127.0.0.1", 706))
